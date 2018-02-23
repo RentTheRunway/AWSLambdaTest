@@ -1,0 +1,77 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+
+target
+commerce-service/keystores/applepaycert.jks
+/commerce-service/keystores/applepaycert.jks
+
+local.yml
+*.local.yml
+.java-version
+
+# Eclipse ephemera #
+######################
+.settings
+.project
+.classpath
+commerce-client/bin/.settings/org.eclipse.jdt.core.prefs
+
+
+
+# Play! #
+#########
+/tmp
+/bin
+/modules
+/lib
+/test-result
+/logs
+
+# Cobertura lock file #
+#######################
+cobertura.ser
+
+# Intellij #
+############
+/.idea/workspace.xml
+/.idea/tasks.xml
+*.iml
+/.idea/libraries
+/.idea/compiler.xml
+/.idea/uiDesigner.xml
+
+# Misc
+######
+nohup.out
+
+/mem
