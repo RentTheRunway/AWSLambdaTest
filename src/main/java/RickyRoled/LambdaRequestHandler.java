@@ -9,30 +9,28 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 
 public class LambdaRequestHandler implements RequestHandler<KinesisEvent, Void> {
     public Void handleRequest(KinesisEvent event, Context context) {
-        //String clientEndpoint = "a1isiazbq6kf4m.iot.us-east-1.amazonaws.com";
-        //AmazonSNS snsClient =  AmazonSNSClientBuilder.standard().withCredentials(new EnvironmentVariableCredentialsProvider()).build();
-        AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withCredentials(new EnvironmentVariableCredentialsProvider()).build();
+        File file = new File("/tmp/text.txt");
         for(KinesisEvent.KinesisEventRecord rec : event.getRecords()) {
             String str = "Calculator will be here eventually: " + new String(rec.getKinesis().getData().array());
-            context.getLogger().log("Calculator will be here eventually: " + new String(rec.getKinesis().getData().array()));
-            File file = new File(System.getProperty("user.dir") + "/membershipactions/text.txt");
+            context.getLogger().log(str);
             try {
-                OutputStream out = new FileOutputStream(file);
-                byte[] strToBytes = str.getBytes();
-                out.write(strToBytes);
-
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                FileWriter fw = new FileWriter(file);
+                fw.write(str);
+                fw.close();
+                AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withCredentials(new EnvironmentVariableCredentialsProvider()).build();
+                //Upload to S3
+                s3Client.putObject(new PutObjectRequest("membershipstate", "text.txt", file));
+            } catch (IOException iox) {
+                //do stuff with exception
+                iox.printStackTrace();
             }
 
-            s3Client.putObject(new PutObjectRequest("membershipaction", "text.txt", file));
+
         }
         return null;
     }
