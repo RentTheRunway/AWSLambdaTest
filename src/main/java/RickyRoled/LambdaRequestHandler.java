@@ -2,6 +2,7 @@ package RickyRoled;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.KinesisEvent;
@@ -24,11 +25,8 @@ public class LambdaRequestHandler implements RequestHandler<KinesisEvent, Void> 
         Integer max = Integer.MAX_VALUE;
         Random random = new Random();
         Integer clientId = random.nextInt(max - min + 1) + min;
-        String awsAccessKeyId = "AKIAJU6YLNXQX3JNIJZQ";
-        String awsSecretAccessKey = "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";
-        BasicAWSCredentials creds = new BasicAWSCredentials(awsAccessKeyId, awsSecretAccessKey);
-        AmazonSNS snsClient =  AmazonSNSClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(creds)).build();
-        AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(creds)).build();
+        AmazonSNS snsClient =  AmazonSNSClientBuilder.standard().withCredentials(new EnvironmentVariableCredentialsProvider()).build();
+        AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withCredentials(new EnvironmentVariableCredentialsProvider()).build();
         for(KinesisEvent.KinesisEventRecord rec : event.getRecords()) {
             String str = "Calculator will be here eventually: " + new String(rec.getKinesis().getData().array());
             context.getLogger().log("Calculator will be here eventually: " + new String(rec.getKinesis().getData().array()));
