@@ -1,6 +1,10 @@
 package Membership;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer;
 import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
@@ -23,7 +27,13 @@ public class MembershipShipment {
     @JsonIgnore
     private Integer shipmentId;
     private Integer openAddOnSlots;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate shipmentReturnByDate;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate shipmentRentalBeginDate;
     private List<MembershipItem> membershipItems;
 

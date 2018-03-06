@@ -3,6 +3,10 @@ package Membership;
 
 import Utilities.SkuUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.joda.ser.LocalDateSerializer;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import org.joda.time.LocalDate;
@@ -68,10 +72,16 @@ public class MembershipItem {
 
     private MembershipItemState state;
 
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate rentalBeginDate;
 
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate onRackRentalBeginDate;
 
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate returnByDate;
 
     @JsonIgnore
@@ -80,6 +90,8 @@ public class MembershipItem {
     @JsonIgnore
     private LocalDate shippedOn;
 
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate returnedOn;
 
     private MembershipItemSlotType type = MembershipItemSlotType.BASE;
